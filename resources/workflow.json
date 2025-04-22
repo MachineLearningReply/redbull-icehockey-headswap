@@ -1,0 +1,933 @@
+{
+  "3": {
+    "inputs": {
+      "seed": 38698569134487,
+      "steps": 8,
+      "cfg": 3.5,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "denoise": 0.5,
+      "model": [
+        "18",
+        0
+      ],
+      "positive": [
+        "264",
+        0
+      ],
+      "negative": [
+        "244",
+        0
+      ],
+      "latent_image": [
+        "230",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "4": {
+    "inputs": {
+      "ckpt_name": "dreamshaper_8.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "239",
+        3
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "12": {
+    "inputs": {
+      "image": "face-input.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "18": {
+    "inputs": {
+      "weight": 1,
+      "weight_faceidv2": 2,
+      "weight_type": "linear",
+      "combine_embeds": "concat",
+      "start_at": 0,
+      "end_at": 1,
+      "embeds_scaling": "V only",
+      "model": [
+        "20",
+        0
+      ],
+      "ipadapter": [
+        "20",
+        1
+      ],
+      "image": [
+        "124",
+        0
+      ]
+    },
+    "class_type": "IPAdapterFaceID",
+    "_meta": {
+      "title": "IPAdapter FaceID"
+    }
+  },
+  "20": {
+    "inputs": {
+      "preset": "FACEID PLUS V2",
+      "lora_strength": 0.33,
+      "provider": "CPU",
+      "model": [
+        "239",
+        1
+      ]
+    },
+    "class_type": "IPAdapterUnifiedLoaderFaceID",
+    "_meta": {
+      "title": "IPAdapter Unified Loader FaceID"
+    }
+  },
+  "30": {
+    "inputs": {
+      "seed": 1008535806988832,
+      "steps": 8,
+      "cfg": 1.5,
+      "control_strength": 1,
+      "adapter_strength": 1,
+      "model": [
+        "32",
+        0
+      ],
+      "images": [
+        "33",
+        0
+      ],
+      "bald_image": [
+        "34",
+        0
+      ]
+    },
+    "class_type": "ApplyHairTransfer",
+    "_meta": {
+      "title": "ApplyHairTransfer"
+    }
+  },
+  "32": {
+    "inputs": {
+      "ckpt_name": "dreamshaper_8.safetensors",
+      "encoder_model": "hair_encoder_model.bin",
+      "adapter_model": "hair_adapter_model.bin",
+      "control_model": "hair_controlnet_model.bin",
+      "device": "AUTO"
+    },
+    "class_type": "LoadStableHairTransferModel",
+    "_meta": {
+      "title": "LoadStableHairTransferModel"
+    }
+  },
+  "33": {
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "interpolation": "nearest",
+      "method": "stretch",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "40",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "34": {
+    "inputs": {
+      "seed": 787926825749608,
+      "steps": 4,
+      "strength": 1.5,
+      "cfg": 1.5,
+      "bald_model": [
+        "37",
+        0
+      ],
+      "images": [
+        "38",
+        0
+      ]
+    },
+    "class_type": "ApplyHairRemover",
+    "_meta": {
+      "title": "ApplyHairRemover"
+    }
+  },
+  "37": {
+    "inputs": {
+      "ckpt_name": "dreamshaper_8.safetensors",
+      "bald_model": "hair_bald_model.bin",
+      "device": "AUTO"
+    },
+    "class_type": "LoadStableHairRemoverModel",
+    "_meta": {
+      "title": "LoadStableHairRemoverModel"
+    }
+  },
+  "38": {
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "interpolation": "nearest",
+      "method": "stretch",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "171",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "40": {
+    "inputs": {
+      "facedetection": "retinaface_resnet50",
+      "image": [
+        "124",
+        0
+      ]
+    },
+    "class_type": "CropFace",
+    "_meta": {
+      "title": "CropFace"
+    }
+  },
+  "52": {
+    "inputs": {
+      "width": 480,
+      "height": 480,
+      "interpolation": "nearest",
+      "method": "stretch",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "30",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "120": {
+    "inputs": {
+      "enabled": true,
+      "swap_model": "reswapper_256.onnx",
+      "facedetection": "retinaface_resnet50",
+      "face_restore_model": "codeformer-v0.1.0.pth",
+      "face_restore_visibility": 1,
+      "codeformer_weight": 0.5,
+      "detect_gender_input": "no",
+      "detect_gender_source": "no",
+      "input_faces_index": "0",
+      "source_faces_index": "0",
+      "console_log_level": 1,
+      "input_image": [
+        "8",
+        0
+      ],
+      "source_image": [
+        "124",
+        0
+      ]
+    },
+    "class_type": "ReActorFaceSwap",
+    "_meta": {
+      "title": "ReActor 🌌 Fast Face Swap"
+    }
+  },
+  "124": {
+    "inputs": {
+      "width": 2048,
+      "height": 2048,
+      "interpolation": "lanczos",
+      "method": "keep proportion",
+      "condition": "downscale if bigger",
+      "multiple_of": 0,
+      "image": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "137": {
+    "inputs": {
+      "model": "MiaoshouAI/Florence-2-base-PromptGen-v2.0",
+      "precision": "fp16",
+      "attention": "sdpa"
+    },
+    "class_type": "DownloadAndLoadFlorence2Model",
+    "_meta": {
+      "title": "DownloadAndLoadFlorence2Model"
+    }
+  },
+  "139": {
+    "inputs": {
+      "text_input": "",
+      "task": "caption",
+      "fill_mask": true,
+      "keep_model_loaded": false,
+      "max_new_tokens": 1024,
+      "num_beams": 3,
+      "do_sample": true,
+      "output_mask_select": "",
+      "seed": 457485010702162,
+      "image": [
+        "148",
+        0
+      ],
+      "florence2_model": [
+        "137",
+        0
+      ]
+    },
+    "class_type": "Florence2Run",
+    "_meta": {
+      "title": "Florence2Run"
+    }
+  },
+  "141": {
+    "inputs": {
+      "text": [
+        "139",
+        2
+      ],
+      "text2": "A close-up of a man with a mustache and a serious expression"
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "Show Text 🐍"
+    }
+  },
+  "144": {
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "interpolation": "lanczos",
+      "method": "keep proportion",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "40",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "148": {
+    "inputs": {
+      "width": 296,
+      "height": 296,
+      "position": "top-left",
+      "x_offset": 108,
+      "y_offset": 108,
+      "image": [
+        "144",
+        0
+      ]
+    },
+    "class_type": "ImageCrop+",
+    "_meta": {
+      "title": "🔧 Image Crop"
+    }
+  },
+  "149": {
+    "inputs": {
+      "image": "RBM_MD-Kabine_4000px.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "150": {
+    "inputs": {
+      "width": 4000,
+      "height": 4000,
+      "interpolation": "lanczos",
+      "method": "keep proportion",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "149",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "151": {
+    "inputs": {
+      "width": 512,
+      "height": 768,
+      "position": "top-left",
+      "x_offset": 1740,
+      "y_offset": 466,
+      "image": [
+        "150",
+        0
+      ]
+    },
+    "class_type": "ImageCrop+",
+    "_meta": {
+      "title": "🔧 Image Crop"
+    }
+  },
+  "171": {
+    "inputs": {
+      "width": 480,
+      "height": 480,
+      "position": "top-left",
+      "x_offset": 0,
+      "y_offset": 65,
+      "image": [
+        "199",
+        0
+      ]
+    },
+    "class_type": "ImageCrop+",
+    "_meta": {
+      "title": "🔧 Image Crop"
+    }
+  },
+  "174": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "offset_x": 0,
+      "offset_y": 65,
+      "destination": [
+        "215",
+        0
+      ],
+      "source": [
+        "52",
+        0
+      ]
+    },
+    "class_type": "ImageComposite+",
+    "_meta": {
+      "title": "🔧 Image Composite"
+    }
+  },
+  "197": {
+    "inputs": {
+      "model": "u2net_human_seg: human segmentation",
+      "providers": "CUDA"
+    },
+    "class_type": "RemBGSession+",
+    "_meta": {
+      "title": "🔧 RemBG Session"
+    }
+  },
+  "198": {
+    "inputs": {
+      "rembg_session": [
+        "197",
+        0
+      ],
+      "image": [
+        "151",
+        0
+      ]
+    },
+    "class_type": "ImageRemoveBackground+",
+    "_meta": {
+      "title": "🔧 Image Remove Background"
+    }
+  },
+  "199": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "201",
+        0
+      ],
+      "source": [
+        "151",
+        0
+      ],
+      "mask": [
+        "198",
+        1
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "201": {
+    "inputs": {
+      "width": 512,
+      "height": 768,
+      "batch_size": 1,
+      "color": 16777215
+    },
+    "class_type": "EmptyImage",
+    "_meta": {
+      "title": "EmptyImage"
+    }
+  },
+  "215": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "offset_x": 0,
+      "offset_y": 520,
+      "destination": [
+        "201",
+        0
+      ],
+      "source": [
+        "217",
+        0
+      ]
+    },
+    "class_type": "ImageComposite+",
+    "_meta": {
+      "title": "🔧 Image Composite"
+    }
+  },
+  "217": {
+    "inputs": {
+      "width": 512,
+      "height": 248,
+      "x": 0,
+      "y": 520,
+      "image": [
+        "151",
+        0
+      ]
+    },
+    "class_type": "ImageCrop",
+    "_meta": {
+      "title": "Image Crop"
+    }
+  },
+  "226": {
+    "inputs": {
+      "kernel_size": 100,
+      "sigma": 50,
+      "mask": [
+        "292",
+        0
+      ]
+    },
+    "class_type": "ImpactGaussianBlurMask",
+    "_meta": {
+      "title": "Gaussian Blur Mask"
+    }
+  },
+  "227": {
+    "inputs": {
+      "noise_mask": true,
+      "positive": [
+        "264",
+        0
+      ],
+      "negative": [
+        "233",
+        0
+      ],
+      "vae": [
+        "236",
+        3
+      ],
+      "pixels": [
+        "174",
+        0
+      ],
+      "mask": [
+        "226",
+        0
+      ]
+    },
+    "class_type": "InpaintModelConditioning",
+    "_meta": {
+      "title": "InpaintModelConditioning"
+    }
+  },
+  "228": {
+    "inputs": {
+      "image": "face_mask.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "230": {
+    "inputs": {
+      "seed": 310923834714656,
+      "steps": 4,
+      "cfg": 8,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 0.35000000000000003,
+      "model": [
+        "236",
+        1
+      ],
+      "positive": [
+        "227",
+        0
+      ],
+      "negative": [
+        "227",
+        1
+      ],
+      "latent_image": [
+        "227",
+        2
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "231": {
+    "inputs": {
+      "samples": [
+        "230",
+        0
+      ],
+      "vae": [
+        "236",
+        3
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "233": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "236",
+        2
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "235": {
+    "inputs": {
+      "model": [
+        "4",
+        0
+      ],
+      "clip": [
+        "4",
+        1
+      ],
+      "vae": [
+        "4",
+        2
+      ]
+    },
+    "class_type": "Bus Node",
+    "_meta": {
+      "title": "Bus Node"
+    }
+  },
+  "236": {
+    "inputs": {
+      "bus": [
+        "235",
+        0
+      ]
+    },
+    "class_type": "Bus Node",
+    "_meta": {
+      "title": "Bus Node"
+    }
+  },
+  "237": {
+    "inputs": {
+      "bus": [
+        "235",
+        0
+      ]
+    },
+    "class_type": "Bus Node",
+    "_meta": {
+      "title": "Bus Node"
+    }
+  },
+  "239": {
+    "inputs": {
+      "bus": [
+        "235",
+        0
+      ]
+    },
+    "class_type": "Bus Node",
+    "_meta": {
+      "title": "Bus Node"
+    }
+  },
+  "244": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "239",
+        2
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "264": {
+    "inputs": {
+      "text": [
+        "139",
+        2
+      ],
+      "clip": [
+        "237",
+        2
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "266": {
+    "inputs": {
+      "rembg_session": [
+        "197",
+        0
+      ],
+      "image": [
+        "120",
+        0
+      ]
+    },
+    "class_type": "ImageRemoveBackground+",
+    "_meta": {
+      "title": "🔧 Image Remove Background"
+    }
+  },
+  "267": {
+    "inputs": {
+      "x": [
+        "151",
+        1
+      ],
+      "y": [
+        "151",
+        2
+      ],
+      "resize_source": false,
+      "destination": [
+        "271",
+        0
+      ],
+      "source": [
+        "120",
+        0
+      ],
+      "mask": [
+        "266",
+        1
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "271": {
+    "inputs": {
+      "image": "RBM_MD-Kabine_4000px_no_face.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "272": {
+    "inputs": {
+      "image": "jersey.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "274": {
+    "inputs": {
+      "x": 2579,
+      "y": 313,
+      "resize_source": false,
+      "destination": [
+        "267",
+        0
+      ],
+      "source": [
+        "285",
+        0
+      ],
+      "mask": [
+        "284",
+        1
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "282": {
+    "inputs": {
+      "images": [
+        "294",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "284": {
+    "inputs": {
+      "rembg_session": [
+        "288",
+        0
+      ],
+      "image": [
+        "285",
+        0
+      ]
+    },
+    "class_type": "ImageRemoveBackground+",
+    "_meta": {
+      "title": "🔧 Image Remove Background"
+    }
+  },
+  "285": {
+    "inputs": {
+      "upscale_method": "nearest-exact",
+      "scale_by": 1.6,
+      "image": [
+        "272",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "288": {
+    "inputs": {
+      "model": "u2net: general purpose",
+      "providers": "CUDA"
+    },
+    "class_type": "RemBGSession+",
+    "_meta": {
+      "title": "🔧 RemBG Session"
+    }
+  },
+  "292": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "228",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "293": {
+    "inputs": {
+      "enabled": true,
+      "swap_model": "inswapper_128.onnx",
+      "facedetection": "retinaface_resnet50",
+      "face_restore_model": "none",
+      "face_restore_visibility": 1,
+      "codeformer_weight": 0.5,
+      "detect_gender_input": "no",
+      "detect_gender_source": "no",
+      "input_faces_index": "0",
+      "source_faces_index": "0",
+      "console_log_level": 1
+    },
+    "class_type": "ReActorFaceSwap",
+    "_meta": {
+      "title": "ReActor 🌌 Fast Face Swap"
+    }
+  },
+  "294": {
+    "inputs": {
+      "width": 3000,
+      "height": 3000,
+      "x": 700,
+      "y": 0,
+      "image": [
+        "274",
+        0
+      ]
+    },
+    "class_type": "ImageCrop",
+    "_meta": {
+      "title": "Image Crop"
+    }
+  }
+}
